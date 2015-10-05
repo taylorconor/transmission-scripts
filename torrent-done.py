@@ -44,8 +44,12 @@ t_name = sys.argv[2]
 t_id = sys.argv[3]
 t_abs = t_dir+t_name
 
-# remove deleted torrent
-call(["transmission-remote", "-t", t_id, "--remove"])
+f = open('/var/www/files/movies/.downloads/status.txt', 'w')
+f.write("t_dir = "+t_dir+", t_name = "+t_name+", t_id = "+t_id+", t_abs = "+t_abs)
+f.close()
+
+# remove deleted torrent - AUTH REMOVED FROM GIT
+call(["transmission-remote", "http://localhost:9091/downloads", "--auth", "###:###", "-t", t_id, "--remove"])
 
 if (os.path.isfile(t_abs)):
     convert(t_abs)
